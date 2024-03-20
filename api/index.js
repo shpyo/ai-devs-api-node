@@ -2,7 +2,7 @@ import axios from 'axios';
 import 'dotenv/config';
 
 const Api = axios.create({
-  baseURL: 'https://tasks.aidevs.pl',
+  baseURL: process.env.API_DOMAIN,
 });
 
 export const postGetTaskToken = async (token) => {
