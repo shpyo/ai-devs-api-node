@@ -49,7 +49,7 @@ export const postTaskAnswer = async (token, answer) => {
     console.log('Done. Response is:', response.data);
     console.log('');
   } catch(e) {
-    console.log('[error]', e);
+    console.log('[error]', e.response.data);
   }
 };
 

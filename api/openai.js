@@ -11,13 +11,22 @@ export const moderate = async function(input) {
   return moderation.results[0];
 }
 
-// async function main() {
-//   const completion = await openai.chat.completions.create({
-//     messages: [{ role: "system", content: "You are a helpful assistant." }],
-//     model: "",
-//   });
+export const chatWithAi = async function(systemPrompt, prompt) {
+  console.log('');
+  console.log('[OpenAI] prompt', prompt);
 
-//   console.log(completion.choices[0]);
-// }
+  const completion = await openai.chat.completions.create({
+    messages: [{
+      role: 'system',
+      content: systemPrompt,
+    }, {
+      role: 'user',
+      content: prompt,
+    }],
+    model: 'gpt-4',
+  });
 
-// main();
+  console.log(completion.choices[0]);
+
+  return completion.choices[0];
+}
