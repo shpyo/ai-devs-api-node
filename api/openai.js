@@ -23,7 +23,7 @@ export const chatWithAi = async function(systemPrompt, prompt) {
       role: 'user',
       content: prompt,
     }],
-    model: 'gpt-4',
+    model: 'gpt-3.5-turbo',
   });
 
   console.log(completion.choices[0]);
