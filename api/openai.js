@@ -11,7 +11,7 @@ export const moderate = async function(input) {
   return moderation.results[0];
 }
 
-export const chatWithAi = async function(systemPrompt, prompt) {
+export const chatWithAi = async function(systemPrompt, prompt, model) {
   console.log('');
   console.log('[OpenAI] prompt', prompt);
 
@@ -23,7 +23,7 @@ export const chatWithAi = async function(systemPrompt, prompt) {
       role: 'user',
       content: prompt,
     }],
-    model: 'gpt-3.5-turbo',
+    model,
   });
 
   console.log(completion.choices[0]);
