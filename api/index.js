@@ -35,7 +35,26 @@ export const getTaskDetails = async (token) => {
 
     return response.data;
   } catch(e) {
-    console.log('[error]', e);
+    console.log('[error]', e.response.data);
+  }
+};
+
+export const postQuestionToTask = async (token, question) => {
+  try {
+    console.log('');
+    console.info(`[info] Sending question to task...`);
+
+    const form = new FormData();
+    form.append('question', question);
+
+    const response = await Api.post(`/task/${token}`, form);
+
+    console.log('Done. Response is:', response.data);
+    console.log('');
+
+    return response.data;
+  } catch(e) {
+    console.log('[error]', e.response.data);
   }
 };
 
