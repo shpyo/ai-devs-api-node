@@ -1,12 +1,14 @@
-import { getTaskDetails, postTaskAnswer, postGetTaskToken } from '../api/index.js';
-import { moderate } from '../api/openai.js';
+import { getTaskDetails, postTaskAnswer, postGetTaskToken } from '../api';
+import { moderate } from '../api/openai';
+
+type ModerationAnswer = number[];
 
 const moderation = async function() {
-  const taskToken = await postGetTaskToken('moderation');
-  const task = await getTaskDetails(taskToken);
+  await postGetTaskToken('moderation');
+  const task = await getTaskDetails();
   const moderates = task.input.map(moderate);
 
-  const moderationResults = [];
+  const moderationResults: ModerationAnswer = [];
 
   await Promise.all(moderates).then((responses) => {
     console.log('');
@@ -18,7 +20,7 @@ const moderation = async function() {
     })
   });
 
-  postTaskAnswer(taskToken, { answer: moderationResults });
+  postTaskAnswer<ModerationAnswer>({ answer: moderationResults });
 }
 
 moderation();

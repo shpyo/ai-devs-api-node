@@ -5,30 +5,48 @@ const Api = axios.create({
   baseURL: process.env.API_DOMAIN,
 });
 
-export const postGetTaskToken = async (token) => {
+interface PostGetTaskTokenResponse {
+  token: string
+}
+
+interface Answer<T = string> {
+  answer: T;
+}
+
+interface GetTaskDetailsResponse {
+  msg: string;
+  cookie?: string;
+}
+
+const apiFields: { token: string; } = {
+  token: '',
+};
+
+export const postGetTaskToken = async (token: string) => {
   try {
     console.log('');
     console.info(`[info] Getting task token for "${token}"...`);
 
-    const response = await Api.post(`/token/${token}`, {
+    const response = await Api.post<PostGetTaskTokenResponse>(`/token/${token}`, {
       apikey: process.env.API_KEY
     });
 
     console.log('Done. Response is:', response.data);
     console.log('');
 
+    apiFields.token = response.data.token;
     return response.data.token;
   } catch (e) {
     console.log('[error]', e);
   }
 };
 
-export const getTaskDetails = async (token) => {
+export const getTaskDetails = async () => {
   try {
     console.log('');
     console.info(`[info] Getting task details...`);
 
-    const response = await Api.get(`/task/${token}`);
+    const response = await Api.get<GetTaskDetailsResponse>(`/task/${apiFields.token}`);
 
     console.log('Done. Response is:', response.data);
     console.log('');
@@ -36,10 +54,11 @@ export const getTaskDetails = async (token) => {
     return response.data;
   } catch(e) {
     console.log('[error]', e.response.data);
+    return e.response.data;
   }
 };
 
-export const postQuestionToTask = async (token, question) => {
+export const postQuestionToTask = async (question: string) => {
   try {
     console.log('');
     console.info(`[info] Sending question to task...`);
@@ -47,7 +66,7 @@ export const postQuestionToTask = async (token, question) => {
     const form = new FormData();
     form.append('question', question);
 
-    const response = await Api.post(`/task/${token}`, form);
+    const response = await Api.post(`/task/${apiFields.token}`, form);
 
     console.log('Done. Response is:', response.data);
     console.log('');
@@ -58,12 +77,12 @@ export const postQuestionToTask = async (token, question) => {
   }
 };
 
-export const postTaskAnswer = async (token, answer) => {
+export const postTaskAnswer = async <T>(answer: Answer<T>) => {
   try {
     console.log('');
     console.info(`[info] Sending an answer for task...`);
 
-    const response = await Api.post(`/answer/${token}`, answer);;
+    const response = await Api.post(`/answer/${apiFields.token}`, answer);;
 
     console.log('Done. Response is:', response.data);
     console.log('');

@@ -1,19 +1,19 @@
-import { getTaskDetails, postTaskAnswer, postGetTaskToken } from '../api/index.js';
-import { chatWithAi } from '../api/openai.js';
+import { getTaskDetails, postTaskAnswer, postGetTaskToken } from '../api';
+import { chatWithAi } from '../api/openai';
 
 const blogger = async function() {
-  const taskToken = await postGetTaskToken('blogger');
-  const task = await getTaskDetails(taskToken);
+  await postGetTaskToken('blogger');
+  const task = await getTaskDetails();
 
   const systemPrompt = 'Jesteś blogerem kulinarnym. Odpowiadasz tylko w obiekcie JSON (tablica składająca się z 4 stringów). Jesteś precyzyjny w odpowiedziach. example```["text", "text", "text", "text"]```';
   const prompt = `${task.msg}: ${JSON.stringify(task.blog)}. Odpowiedź na każdy temat musi mieć minimum 5 zdań.`;
 
   const asnwerFromChat = await chatWithAi(systemPrompt, prompt, 'gpt-3.5-turbo');
-  const answer = JSON.parse(asnwerFromChat.message.content);
+  const answer = JSON.parse(asnwerFromChat.message.content as string);
   console.log('');
   console.log(answer)
   
-  postTaskAnswer(taskToken, { answer });
+  postTaskAnswer({ answer });
 }
 
 blogger();

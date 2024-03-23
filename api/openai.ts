@@ -5,13 +5,13 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-export const moderate = async function(input) {
+export const moderate = async function(input: string) {
   console.log('[openAI] running moderation for', input);
   const moderation = await openai.moderations.create({ input });
   return moderation.results[0];
 }
 
-export const chatWithAi = async function(systemPrompt, prompt, model) {
+export const chatWithAi = async function(systemPrompt: string, prompt: string, model: 'gpt-3.5-turbo' | 'gpt-4') {
   console.log('');
   console.log('[OpenAI] prompt', prompt);
 
