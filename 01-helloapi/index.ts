@@ -1,10 +1,14 @@
 import { getTaskDetails, postTaskAnswer, postGetTaskToken } from '../api';
 
-const helloApi = async function() {
-  await postGetTaskToken('helloapi');
-  const task = await getTaskDetails();
-
-  await postTaskAnswer({ answer: task.cookie });
+interface HelloApiTaskResponse {
+  cookie: string;
 }
+
+const helloApi = async function () {
+  await postGetTaskToken('helloapi');
+  const { cookie } = await getTaskDetails<HelloApiTaskResponse>();
+
+  await postTaskAnswer({ answer: cookie });
+};
 
 helloApi();

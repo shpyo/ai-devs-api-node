@@ -6,27 +6,18 @@ const Api = axios.create({
 });
 
 interface PostGetTaskTokenResponse {
-  token: string
+  token: string;
 }
 
 interface Answer<T = string> {
   answer: T;
 }
 
-interface DefaultTaskDetailsResponse {
-  msg: string;
-}
-// type CustomTaskDetailsResponse<T> = DefaultTaskDetailsResponse & Record<keyof T, string>;
-// interface CustomTaskDetailsResponse<T extends DefaultTaskDetailsResponse> {
-//   [keyof T]: string;
-// };
-
 interface GetTaskDetailsResponse {
   msg: string;
-  cookie?: string;
 }
 
-const apiFields: { token: string; } = {
+const apiFields: { token: string } = {
   token: '',
 };
 
@@ -35,9 +26,12 @@ export const postGetTaskToken = async (token: string) => {
     console.log('');
     console.info(`[info] Getting task token for "${token}"...`);
 
-    const response = await Api.post<PostGetTaskTokenResponse>(`/token/${token}`, {
-      apikey: process.env.API_KEY
-    });
+    const response = await Api.post<PostGetTaskTokenResponse>(
+      `/token/${token}`,
+      {
+        apikey: process.env.API_KEY,
+      }
+    );
 
     console.log('Done. Response is:', response.data);
     console.log('');
@@ -49,27 +43,24 @@ export const postGetTaskToken = async (token: string) => {
   }
 };
 
-export const getTaskDetails = async <T>() => {
-  try {
-    console.log('');
-    console.info(`[info] Getting task details...`);
+export const getTaskDetails = async <T extends {}>() => {
+  console.log('');
+  console.info(`[info] Getting task details...`);
 
-    const response = await Api.get<GetTaskDetailsResponse>(`/task/${apiFields.token}`);
+  const response = await Api.get<GetTaskDetailsResponse & T>(
+    `/task/${apiFields.token}`
+  );
 
-    console.log('Done. Response is:', response.data);
-    console.log('');
+  console.log('Done. Response is:', response.data);
+  console.log('');
 
-    return response.data;
-  } catch(e) {
-    console.log('[error]', e.response.data);
-    return e.response.data;
-  }
+  return response.data;
 };
 
 export const postQuestionToTask = async (question: string) => {
   try {
     console.log('');
-    console.info(`[info] Sending question to task...`);
+    console.info('[info] Sending question to task...');
 
     const form = new FormData();
     form.append('question', question);
@@ -80,7 +71,7 @@ export const postQuestionToTask = async (question: string) => {
     console.log('');
 
     return response.data;
-  } catch(e) {
+  } catch (e) {
     console.log('[error]', e.response.data);
   }
 };
@@ -90,11 +81,11 @@ export const postTaskAnswer = async <T>(answer: Answer<T>) => {
     console.log('');
     console.info(`[info] Sending an answer for task...`);
 
-    const response = await Api.post(`/answer/${apiFields.token}`, answer);;
+    const response = await Api.post(`/answer/${apiFields.token}`, answer);
 
     console.log('Done. Response is:', response.data);
     console.log('');
-  } catch(e) {
+  } catch (e) {
     console.log('[error]', e.response.data);
   }
 };
