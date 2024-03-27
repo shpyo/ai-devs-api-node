@@ -13,6 +13,14 @@ interface Answer<T = string> {
   answer: T;
 }
 
+interface DefaultTaskDetailsResponse {
+  msg: string;
+}
+// type CustomTaskDetailsResponse<T> = DefaultTaskDetailsResponse & Record<keyof T, string>;
+// interface CustomTaskDetailsResponse<T extends DefaultTaskDetailsResponse> {
+//   [keyof T]: string;
+// };
+
 interface GetTaskDetailsResponse {
   msg: string;
   cookie?: string;
@@ -41,7 +49,7 @@ export const postGetTaskToken = async (token: string) => {
   }
 };
 
-export const getTaskDetails = async () => {
+export const getTaskDetails = async <T>() => {
   try {
     console.log('');
     console.info(`[info] Getting task details...`);
