@@ -37,3 +37,15 @@ export const chatWithAi = async function (
 
   return completion.choices[0];
 };
+
+export const createEmbedding = async function (input: string) {
+  console.log('');
+  console.log('[OpenAI] embedding for', input);
+
+  const response = await openai.embeddings.create({
+    input,
+    model: 'text-embedding-ada-002',
+  });
+
+  return response.data[0].embedding;
+};
