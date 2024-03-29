@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import OpenAI from 'openai';
 import 'dotenv/config';
 
@@ -48,4 +50,24 @@ export const createEmbedding = async function (input: string) {
   });
 
   return response.data[0].embedding;
+};
+
+export const audioToTextFromUrl = async function (url: string) {
+  const blob = await fetch(url).then((r) => r.blob());
+  const file = new File([blob], 'audio.mp3');
+  const transcription = await openai.audio.transcriptions.create({
+    file,
+    model: 'whisper-1',
+  });
+
+  return transcription.text;
+};
+
+export const audioToTextFromStorage = async function (fileName: string) {
+  const transcription = await openai.audio.transcriptions.create({
+    file: fs.createReadStream(path.join(__dirname, '../storage/', fileName)),
+    model: 'whisper-1',
+  });
+
+  return transcription.text;
 };
