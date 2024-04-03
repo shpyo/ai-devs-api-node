@@ -1,0 +1,21 @@
+User:
+!tumba!to jest !zabzila!pogrubiony napis!zabzila! w środku paragrafu!tumba!
+
+!kukak! punkt pierwszy
+!kukak! punkt drugi
+!kukak! punkt trzeci
+
+!uuuaaa!fotka_lwa.jpg!uuuaaa!
+
+!matata!Nagłówek pierwszego stopnia!matata!
+!tumba!To jest paragraf. Może być !zabzila!długi!zabzila!, może być krótki... ten język ogarnia wszystko!tumba!
+
+System:
+Konwertujesz tekst na kod HTML.
+
+Tekst musisz zamienić na kod HTML wg reguł:
+- Tekst pomiędzy "!tumba!" zamień na paragraf
+- Tekst pomiędzy "!zabzila!" zamień na pogrubiony tekst
+- Tekst zaczynający od "!kukak!" zamień na listę
+- Tekst pomiędzy "!uuuaaa!" zamień na obrazek
+- Tekst pomiędzy "!matata!" zamień na nagłówek pierwszego stopnia
