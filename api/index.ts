@@ -47,14 +47,18 @@ export const getTaskDetails = async <T extends {}>() => {
   console.log('');
   console.info(`[info] Getting task details...`);
 
-  const response = await Api.get<GetTaskDetailsResponse & T>(
-    `/task/${apiFields.token}`
-  );
+  try {
+    const response = await Api.get<GetTaskDetailsResponse & T>(
+      `/task/${apiFields.token}`
+    );
 
-  console.log('Done. Response is:', response.data);
-  console.log('');
+    console.log('Done. Response is:', response.data);
+    console.log('');
 
-  return response.data;
+    return response.data;
+  } catch (e) {
+    console.log('[error]', e.response.data);
+  }
 };
 
 export const postQuestionToTask = async (question: string) => {
@@ -81,12 +85,17 @@ export const postTaskAnswer = async <T>(answer: Answer<T>) => {
     console.log('');
     console.info(`[info] Sending an answer for task...`);
 
-    const response = await Api.post(`/answer/${apiFields.token}`, answer);
+    const response = await Api.post<{ msg: string; code: number }>(
+      `/answer/${apiFields.token}`,
+      answer
+    );
 
     console.log('Done. Response is:', response.data);
     console.log('');
+    return response.data;
   } catch (e) {
     console.log('[error]', e.response.data);
+    return e.response.data;
   }
 };
 

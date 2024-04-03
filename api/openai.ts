@@ -1,6 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import OpenAI from 'openai';
+import {
+  ChatCompletionMessage,
+  ChatCompletionMessageParam,
+  ChatCompletionRole,
+  ChatCompletionSystemMessageParam,
+} from 'openai/resources/index.mjs';
 import 'dotenv/config';
 
 const openai = new OpenAI({
@@ -31,6 +37,33 @@ export const chatWithAi = async function (
         role: 'user',
         content: prompt,
       },
+    ],
+    model,
+  });
+
+  console.log('[OpenAI] response:');
+  console.log(completion.choices[0].message.content);
+
+  return completion.choices[0];
+};
+
+export type ChatHistory = ChatCompletionMessageParam;
+
+export const chatWithAiWithHistory = async function (
+  systemPrompt: string,
+  history: ChatCompletionMessageParam[],
+  model: 'gpt-3.5-turbo' | 'gpt-4'
+) {
+  console.log('');
+  console.log('[OpenAI] starting conversation');
+
+  const completion = await openai.chat.completions.create({
+    messages: [
+      {
+        role: 'system',
+        content: systemPrompt,
+      },
+      ...history,
     ],
     model,
   });
