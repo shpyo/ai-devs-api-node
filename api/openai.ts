@@ -19,7 +19,7 @@ export const chatWithAi = async function (
   model: 'gpt-3.5-turbo' | 'gpt-4'
 ) {
   console.log('');
-  console.log('[OpenAI] prompt', prompt);
+  console.log('[OpenAI] starting conversation');
 
   const completion = await openai.chat.completions.create({
     messages: [
@@ -35,7 +35,8 @@ export const chatWithAi = async function (
     model,
   });
 
-  console.log(completion.choices[0]);
+  console.log('[OpenAI] response:');
+  console.log(completion.choices[0].message.content);
 
   return completion.choices[0];
 };
