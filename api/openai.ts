@@ -1,12 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import OpenAI from 'openai';
-import {
-  ChatCompletionMessage,
-  ChatCompletionMessageParam,
-  ChatCompletionRole,
-  ChatCompletionSystemMessageParam,
-} from 'openai/resources/index.mjs';
+import { ChatCompletionMessageParam } from 'openai/resources';
 import 'dotenv/config';
 
 const openai = new OpenAI({

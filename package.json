@@ -7,15 +7,24 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts-node": "ts-node"
   },
+  "module": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@qdrant/js-client-rest": "^1.8.1",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "openai": "^4.29.2",
     "puppeteer": "^22.6.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
+  },
+  "dependencies": {
+    "@langchain/openai": "^0.0.26",
+    "install": "^0.13.0",
+    "langchain": "^0.1.31",
+    "npm": "^10.5.1",
+    "uuid": "^9.0.1"
   }
 }

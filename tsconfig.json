@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "esModuleInterop": true,
+    "esModuleInterop": true
   },
   "ts-node": {
     // these options are overrides used only by ts-node
@@ -14,5 +15,5 @@
     "compilerOptions": {
       "module": "commonjs"
     }
-  },
+  }
 }
