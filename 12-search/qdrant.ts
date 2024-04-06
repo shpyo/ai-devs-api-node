@@ -7,7 +7,7 @@ import 'dotenv/config';
 
 // https://github.com/qdrant/qdrant-js
 // docker pull qdrant/qdrant
-// docker run -p 6333:6333 qdrant/qdrant
+// docker run -p 6333:6333 -v $(pwd)/qdrant_storage:/qdrant/storage qdrant/qdrant
 
 // TO connect to Qdrant running locally
 
