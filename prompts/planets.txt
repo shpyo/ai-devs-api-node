@@ -1,0 +1,21 @@
+prompt 1:
+
+Zwróć odpowiedź w postaci prostego i czytelnego formatu do wykorzystania w skrypcie w przeglądarce internetowej.
+
+Zadanie:
+Patrzysz w kosmos.
+Podaj pełną listę 9 elementów, które znajdują się po słońcu.
+Elementy nie mogę zaczynać się z wielkiej litery
+
+example```[""]```
+
+prompt 2 (preferwoana odp):
+
+Dokończ wypowiedź, zawierając w uzupełnieniu również to co podał użytkownik. 
+
+###
+PRZYKŁAD:
+user: ["czerwony", "pomarańczowy", "żółty"...
+AI: ["czerwony", "pomarańczowy", "żółty", "zielony", "niebieski", "fioletowy"]
+###
+user: ["merkury","wenus"
