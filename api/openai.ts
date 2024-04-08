@@ -3,6 +3,7 @@ import path from 'path';
 import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources';
 import 'dotenv/config';
+import { ChatCompletionCreateParamsBase } from 'openai/resources/chat/completions';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -99,4 +100,29 @@ export const audioToTextFromStorage = async function (fileName: string) {
   });
 
   return transcription.text;
+};
+
+export type FunctionsType = ChatCompletionCreateParamsBase['tools'];
+export const chatWithAiFunctionCalling = async function (
+  functions: FunctionsType,
+  content: string
+) {
+  console.log('');
+  console.log('[OpenAI] starting conversation');
+
+  const completion = await openai.chat.completions.create({
+    messages: [
+      {
+        role: 'user',
+        content,
+      },
+    ],
+    tools: functions,
+    model: 'gpt-3.5-turbo-0125',
+  });
+
+  console.log('[OpenAI] response:');
+  console.log(completion.choices[0]);
+
+  return completion.choices[0];
 };
