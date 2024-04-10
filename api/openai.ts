@@ -105,20 +105,23 @@ export const audioToTextFromStorage = async function (fileName: string) {
 export type FunctionsType = ChatCompletionCreateParamsBase['tools'];
 export const chatWithAiFunctionCalling = async function (
   functions: FunctionsType,
-  content: string
+  content: string,
+  system?: ChatCompletionMessageParam[],
+  model?: 'gpt-3.5-turbo-0125' | 'gpt-4'
 ) {
   console.log('');
   console.log('[OpenAI] starting conversation');
 
   const completion = await openai.chat.completions.create({
     messages: [
+      ...system,
       {
         role: 'user',
         content,
       },
     ],
     tools: functions,
-    model: 'gpt-3.5-turbo-0125',
+    model: model || 'gpt-3.5-turbo-0125',
   });
 
   console.log('[OpenAI] response:');
