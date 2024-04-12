@@ -129,3 +129,31 @@ export const chatWithAiFunctionCalling = async function (
 
   return completion.choices[0];
 };
+
+export const checkAiImage = async function (prompt: string, url: string) {
+  console.log('');
+  console.log('[OpenAI] starting image AI check');
+
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4-turbo',
+    messages: [
+      {
+        role: 'user',
+        content: [
+          { type: 'text', text: prompt },
+          {
+            type: 'image_url',
+            image_url: {
+              url,
+            },
+          },
+        ],
+      },
+    ],
+  });
+
+  console.log('[OpenAI] response:');
+  console.log(completion.choices[0].message.content);
+
+  return completion.choices[0];
+};
