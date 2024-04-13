@@ -44,7 +44,7 @@ app.post('/answer', async function (req, res) {
   console.log(completion.choices[0].message.content);
 
   // return completion.choices[0];
-  res.json({ answer: completion.choices[0].message.content }).status(200).end();
+  res.json({ reply: completion.choices[0].message.content }).status(200).end();
 });
 
 app.listen(8888, () => {
