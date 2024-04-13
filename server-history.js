@@ -42,9 +42,25 @@ app.post('/answer', async function (req, res) {
   console.log('');
   console.log('[OpenAI] starting conversation...');
 
-  console.log('history', question);
+  //let systemMessage = "Conversation history:\n" + messageData['messages'].map(m => `${m.role} [${m.timestamp}]: ${m.content}`).join("\n");
+  const conversationHistory = `Historia rozmowy:
+  ${getChatHistory().map(function (dialog) {
+    return `[${dialog.role}] ${dialog.content}
+    `;
+  })}`;
+
+  console.log('history', getChatHistory());
   const completion = await openai.chat.completions.create({
-    messages: getChatHistory(),
+    messages: [
+      {
+        role: 'system',
+        content: conversationHistory,
+      },
+      {
+        role: 'user',
+        content: question,
+      },
+    ],
     model: 'gpt-3.5-turbo',
   });
 
